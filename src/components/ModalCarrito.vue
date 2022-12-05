@@ -16,12 +16,15 @@
                 <v-simple-table>
                     <template v-slot:default>
                         <thead>
-                            <tr>
+                            <tr class="">
                                 <th class="text-left">
                                     ID
                                 </th>
                                 <th class="text-left">
                                     Producto
+                                </th>
+                                <th class="text-left">
+                                    Descripcion
                                 </th>
                                 <th class="text-left">
                                     Toppings
@@ -38,6 +41,7 @@
                             <tr v-for="item in desserts" :key="item.name">
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.producto }}</td>
+                                <td>{{ item.descripcion }}</td>
                                 <td>{{ item.toppings }}</td>
                                 <td>{{ item.cantidad }}</td>
                                 <td>{{ item.precio }}</td>
@@ -76,13 +80,15 @@ export default {
           {
             id: 1,
             producto: 'Alfajores',
-            toppings: 'Coco',
+            descripcion: '',
+            toppings: 'Coco, Azúcar glass',
             cantidad: 1,
             precio: 80
           },
           {
             id: 2,
             producto: 'Bollitos',
+            descripcion: '',
             toppings: '',
             cantidad: 2,
             precio: 100
@@ -90,6 +96,7 @@ export default {
           {
             id: 3,
             producto: 'Pastel Chocolate',
+            descripcion: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt, voluptatum neque possimus quia quae et dicta delectus fugit nulla rerum? Odio earum sit esse incidunt magni a iste. Quae, incidunt.',
             toppings: '',
             cantidad: 1,
             precio: 150

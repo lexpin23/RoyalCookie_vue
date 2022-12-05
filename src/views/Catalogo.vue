@@ -43,7 +43,7 @@
                             <v-spacer></v-spacer>
 
                             <v-btn icon>
-                                <v-icon>mdi-plus</v-icon>
+                                <ModalRoles title="Roles"></ModalRoles>
                             </v-btn>
 
                     </v-card-actions>
@@ -67,7 +67,7 @@
                         <v-spacer></v-spacer>
 
                         <v-btn icon>
-                            <v-icon>mdi-plus</v-icon>
+                            <ModalBollitos title="Bollitos"></ModalBollitos>
                         </v-btn>
 
                     </v-card-actions>
@@ -91,7 +91,7 @@
                         <v-spacer></v-spacer>
 
                         <v-btn icon>
-                            <v-icon>mdi-plus</v-icon>
+                            <ModalPastelS title="Pastel simple"></ModalPastelS>
                         </v-btn>
 
                     </v-card-actions>
@@ -131,13 +131,19 @@
 
     import ModalAlfajores from '../components/ModalAlfajores.vue'
     import ModalPastelP from '../components/modalPastelP.vue'
+    import ModalBollitos from '../components/ModalBollitos.vue'
+    import ModalRoles from '../components/ModalRoles.vue'
+    import ModalPastelS from '../components/ModalPastelS.vue'
 
     export default {
         name : 'catalogo',
 
         components: {
             ModalAlfajores,
-            ModalPastelP
+            ModalPastelP,
+            ModalBollitos,
+            ModalRoles,
+            ModalPastelS
         },
         data() {
             return{
