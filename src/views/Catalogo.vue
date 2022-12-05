@@ -17,9 +17,9 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
 
-                            <v-btn icon @click="modalAlfajores()">
+                            <v-btn icon >
                                 <!--<v-icon>mdi-plus</v-icon>-->
-                                <ModalAlfajores id="modalA" title="Alfajores"></ModalAlfajores>
+                                <ModalAlfajores id="modalA" title="Alfajores" @click="getToppings()"></ModalAlfajores>
                             </v-btn>
 
                         </v-card-actions>
@@ -115,7 +115,8 @@
                         <v-spacer></v-spacer>
 
                         <v-btn icon>
-                            <v-icon>mdi-plus</v-icon>
+                            <!--<v-icon>mdi-plus</v-icon>-->
+                            <ModalPastelP title="Pastel Personalizado"></ModalPastelP>
                         </v-btn>
 
                     </v-card-actions>
@@ -129,12 +130,14 @@
 <script>
 
     import ModalAlfajores from '../components/ModalAlfajores.vue'
+    import ModalPastelP from '../components/modalPastelP.vue'
 
     export default {
         name : 'catalogo',
 
         components: {
-            ModalAlfajores
+            ModalAlfajores,
+            ModalPastelP
         },
         data() {
             return{
@@ -144,8 +147,8 @@
         },
 
         methods: {
-            modalAlfajores(){
-                alert('Bienvenido al modal para pedir alfajores')
+            print(){
+                console.log(this.getToppings)
             }
         }
     }

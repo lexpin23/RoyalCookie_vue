@@ -26,6 +26,7 @@
 
 <script>
 
+
 import ModalCarrito from './components/ModalCarrito.vue';
 
 
@@ -34,7 +35,8 @@ export default {
   name: 'App',
 
   components: {
-    ModalCarrito
+    ModalCarrito,
+    
 
   },
 
@@ -43,7 +45,7 @@ export default {
 
       rutas: [
         { nombre: 'Home', ruta: '/' },
-        { nombre: 'About', ruta: '/about' },
+        { nombre: 'About', ruta: '/acercade' },
         { nombre: 'Catalogo', ruta: '/catalogo' },
         { nombre: 'Pedidos', ruta: '/pedidos' },
       ],

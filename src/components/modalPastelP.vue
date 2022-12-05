@@ -8,48 +8,57 @@
                     </v-btn>
 
                 </template>
-                <v-card>
+                <v-form  ref="form" v-model="valid" lazy-validation>
+                    <v-card>
                     <v-card-title class="grey lighten-2">
                         <span class="text-h5">{{ title }}</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            
                             <v-col>
-                                <v-row>
-                                    <v-row class="mt-5">
-                                        <h2 class="mr-3">Cajas</h2>
-                                    </v-row>
-                                   
-                                    <v-row>
-                                        <v-btn type="button" v-if="counter < 0 ? counter = 0 : 'logrado'" v-on:click="counter -= 1">-</v-btn>
-                                        <p class="ml-2 mr-2 mt-2">{{ counter }}</p>
-                                        <v-btn v-on:click="counter += 1" class="mr-auto">+</v-btn>
-                                    </v-row>
-                                    
-                                </v-row>
-
-                                <v-row class="mt-5">
-                                    <v-row class="mt-5">
-                                        <h2 class="mr-3">Toppings</h2>
+                                <v-row class="mt-3">
+                                    <v-row class="">
+                                        <h2 class="mr-3">Tamaño</h2>
                                     </v-row>
                                 </v-row>
 
                                 <v-row>
                                     <v-row class="mt-5">
-                                            <v-combobox v-model="select" :items="items" label="Seleccionar Topping" multiple outlined dense></v-combobox>
+                                        <v-radio-group id="radio-group" v-model="radioGroup" :rules="[v => !!v || 'Debes elegir un tamaño']" required>
+                                            <v-radio label="Chico" value="radio-1">Chico</v-radio>
+                                            <v-radio label="Mediano" value="radio-2"></v-radio>
+                                        </v-radio-group>
                                     </v-row>
                                 </v-row>
-                                
+
+
+                                <v-row class="">
+                                    <v-row class="mt-3">
+                                        <h2 class="mr-3">Estilo</h2>
+                                    </v-row>
+                                </v-row>
+
+                                <v-row>
+                                    <v-row class="mt-5">
+                                        <v-radio-group id="radio-group" v-model="radioGroup" :rules="[v => !!v || 'Debes elegir un estilo']" required>
+                                            <v-radio label="Esponjoso" value="radio-1">Esponjoso</v-radio>
+                                            <v-radio label="Mantequilla" value="radio-2">Mantequilla</v-radio>
+                                        </v-radio-group>
+                                    </v-row>
+                                </v-row>
+
 
                                 <v-row class="mt-3">
                                     <v-row class="mt-5">
-                                        <h2>Total</h2>     
+                                        <h2>Total</h2>
                                     </v-row>
                                 </v-row>
 
                                 <v-row class="mt-3">
-                                    <v-row class="mt-5"><v-label>${{ (cajaA * counter) + (counterT * coco) + (counterA * azucarG) }}</v-label></v-row>
+                                    <v-row class="mt-5">
+                                        <v-label>${{ (cajaA * counter) + (counterT * coco) + (counterA * azucarG) }}
+                                        </v-label>
+                                    </v-row>
                                 </v-row>
                             </v-col>
 
@@ -60,18 +69,23 @@
                         <v-btn color="blue darken-1" text @click="dialog = false">
                             Cerrar
                         </v-btn>
-                        <v-btn color="blue darken-1" text @click="agregarCarrito()">
+                        <v-btn color="blue darken-1" text :disabled="!valid" class="mr-4" @click="validate">
                             Agregar al carrito
+                        </v-btn>
+
+                        <v-btn color="error" class="mr-4" @click="reset">
+                            Limpiar
                         </v-btn>
                     </v-card-actions>
                 </v-card>
+                </v-form>
+
             </v-dialog>
         </v-row>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     props: ['title'],
@@ -88,25 +102,15 @@ export default {
         desbtn: false,
         desbtnT: false,
         select: [],
-        items: [],
-        info: ''
+        items: [
+            'Esponjoso',
+            'Mantequilla'
+        ],
+        column: 1,
+        row: null,
     }),
 
     methods: {
-        getToppings(){
-            this.items = []
-
-            axios.get('http://localhost:8080/api/obtenergalletas')
-            .then(response => {
-                console.log('===SUCCESS===')
-                Object.entries(response.data).forEach(([key, value]) => {
-                    console.log(value.Toping)
-                    this.items.push(value.Toping)
-                });
-            })
-            .catch(error => console.log(error))
-        },
-
         agregarCarrito() {
 
             if (this.counter > 0) {
@@ -127,16 +131,14 @@ export default {
             else {
 
             }
-        }
+        },
+        validate () {
+        this.$refs.form.validate()
+      },
+      reset () {
+        this.$refs.form.reset()
+      },
     },
-
-    computed: {
-    },
-
-    created() {
-        this.getToppings()
-    },
-
     watch: {
 
     }
@@ -148,5 +150,13 @@ export default {
 <style>
 #v-card-title {
     background-color: #ffffff9d;
+}
+
+.tamanio{
+    margin-top: 18px;
+}
+
+#radio-group{
+    margin-top: -10px;
 }
 </style>

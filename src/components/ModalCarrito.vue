@@ -65,6 +65,7 @@
 
 <script>
 
+
 export default {
 
     name: 'carrito',
@@ -98,4 +99,6 @@ export default {
     },
 
 }
+
+
 </script>
