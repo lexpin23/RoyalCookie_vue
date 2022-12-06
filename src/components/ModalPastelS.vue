@@ -72,7 +72,7 @@
 
                                 <v-row class="mt-3">
                                     <v-row class="mt-5">
-                                        <v-label><i>El costo será calculado por el administrador</i></v-label>
+                                        <v-label>$</v-label>
                                     </v-row>
                                 </v-row>
                             </v-col>
@@ -105,11 +105,7 @@ export default {
     data: () => ({
         dialog: false,
         checkbox: false,
-        name: '',
-        nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 100) || 'Name must be less than 100 characters',
-      ],
+        name: ''
     }),
 
     methods: {

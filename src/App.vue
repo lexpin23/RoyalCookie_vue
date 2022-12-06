@@ -44,8 +44,8 @@ export default {
     return {
 
       rutas: [
-        { nombre: 'Home', ruta: '/' },
-        { nombre: 'About', ruta: '/acercade' },
+        { nombre: 'Inicio', ruta: '/' },
+        { nombre: 'Nosotros', ruta: '/nosotros' },
         { nombre: 'Catalogo', ruta: '/catalogo' },
         { nombre: 'Pedidos', ruta: '/pedidos' },
       ],
