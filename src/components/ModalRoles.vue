@@ -91,8 +91,20 @@ export default {
         agregarCarrito() {
 
             if (this.counter > 0) {
-                alert('Se añadió al carrito')
+                axios.post('http://localhost:8080/api/AgregarCarrito', {
+                    "idUser": 1,
+                    "Cantidad": this.counter,
+                    "idCatalogo": 2
 
+                }).then((res) => {
+                    const { data } = res;
+                    console.log(data)
+                    alert('Se añadió al carrito')
+
+                }).catch((err) => {
+                    console.log(err)
+                })
+                
                 //Establecer valores en 0
                 this.counter = 0
                 this.dialog = false
@@ -107,7 +119,7 @@ export default {
     },
 
     created() {
-        // this.getToppings()
+       
     },
 
     watch: {

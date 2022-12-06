@@ -37,7 +37,10 @@
 
                                 <v-row>
                                     <v-row class="mt-5">
-                                            <v-combobox v-model="select" :items="items" label="Seleccionar Topping" multiple outlined dense></v-combobox>
+                                        <v-radio-group id="radio-group">
+                                            <v-radio label="Coco" value="Coco" ></v-radio>
+                                            <v-radio label="Azúcar glass" value="Azúcar glass" ></v-radio>
+                                        </v-radio-group>
                                     </v-row>
                                 </v-row>
                                 
@@ -96,7 +99,7 @@ export default {
         getToppings(){
             this.items = []
 
-            axios.get('https://api.nasa.gov/planetary/apod?api_key=Q3sdmUApwLSLHhNM3Mcd5A77yc3VcOAdfHWIxXRK')
+            axios.get('http://localhost:8080/api/obtenergalletas')
             .then(response => {
                 console.log('===SUCCESS===')
                 console.log(response)
@@ -111,13 +114,25 @@ export default {
         agregarCarrito() {
 
             if (this.counter > 0) {
-                alert('Se añadió al carrito')
-                const ALFAJOR = {
-                    cajas: this.counter,
-                    toppings: this.select
-                }
-                console.log(ALFAJOR)
 
+                let radioGroup = document.getElementById('radio-group')
+                console.log(radioGroup)
+                console.log(`${this.counter}`)
+
+                axios.post('http://localhost:8080/api/AgregarCarrito', {
+                    "idUser": 1,
+                    "Cantidad": this.counter,
+                    "idCatalogo": 1
+
+                }).then((res) => {
+                    const { data } = res;
+                    console.log(data)
+                    alert('Se añadió al carrito')
+
+                }).catch((err) => {
+                    console.log(err)
+                })
+                
                 //Establecer valores en 0
                 this.counter = 0
                 this.counterT = 0
