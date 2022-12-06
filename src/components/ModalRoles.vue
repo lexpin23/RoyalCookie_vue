@@ -36,7 +36,7 @@
                                 </v-row>
 
                                 <v-row class="mt-3">
-                                    <v-row class="mt-5"><v-label>${{ (cajaA * counter)}}</v-label></v-row>
+                                    <v-row class="mt-5"><v-label>${{ (cajaR * counter)}}</v-label></v-row>
                                 </v-row>
                             </v-col>
 
@@ -62,13 +62,13 @@ import axios from 'axios'
 
 export default {
     props: ['title'],
-    name: 'ModalAlfajores',
+    name: 'ModalRoles',
 
     data: () => ({
         dialog: false,
         counter: 1,
         
-        cajaA: 80,
+        cajaR: 50,
         info: ''
     }),
 
@@ -92,17 +92,9 @@ export default {
 
             if (this.counter > 0) {
                 alert('Se añadió al carrito')
-                const ALFAJOR = {
-                    cajas: this.counter,
-                    toppings: this.select
-                }
-                console.log(ALFAJOR)
 
                 //Establecer valores en 0
                 this.counter = 0
-                this.counterT = 0
-                this.counterA = 0
-                this.select = []
                 this.dialog = false
             }
             else {

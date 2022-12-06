@@ -29,19 +29,6 @@
                                     
                                 </v-row>
 
-                                <v-row class="mt-5">
-                                    <v-row class="mt-5">
-                                        <h2 class="mr-3">Toppings</h2>
-                                    </v-row>
-                                </v-row>
-
-                                <v-row>
-                                    <v-row class="mt-5">
-                                            <v-combobox v-model="select" :items="items" label="Seleccionar Topping" multiple outlined dense></v-combobox>
-                                    </v-row>
-                                </v-row>
-                                
-
                                 <v-row class="mt-3">
                                     <v-row class="mt-5">
                                         <h2>Total</h2>     
@@ -49,7 +36,7 @@
                                 </v-row>
 
                                 <v-row class="mt-3">
-                                    <v-row class="mt-5"><v-label>${{ (cajaA * counter) + (counterT * coco) + (counterA * azucarG) }}</v-label></v-row>
+                                    <v-row class="mt-5"><v-label>${{ (cajaB * counter)}}</v-label></v-row>
                                 </v-row>
                             </v-col>
 
@@ -75,54 +62,39 @@ import axios from 'axios'
 
 export default {
     props: ['title'],
-    name: 'ModalAlfajores',
+    name: 'ModalBollitos',
 
     data: () => ({
         dialog: false,
         counter: 1,
-        counterT: 0,
-        counterA: 0,
-        cajaA: 80,
-        coco: 10,
-        azucarG: 5,
-        desbtn: false,
-        desbtnT: false,
-        select: [],
-        items: [],
+        
+        cajaB: 40,
         info: ''
     }),
 
     methods: {
         getToppings(){
-            this.items = []
+            
 
-            axios.get('https://api.nasa.gov/planetary/apod?api_key=Q3sdmUApwLSLHhNM3Mcd5A77yc3VcOAdfHWIxXRK')
-            .then(response => {
-                console.log('===SUCCESS===')
-                console.log(response)
-                Object.entries(response.data).forEach(([key, value]) => {
-                    console.log(value.Toping)
-                    this.items.push(value.Toping)
-                });
-            })
-            .catch(error => console.log(error))
+            // axios.get('https://api.nasa.gov/planetary/apod?api_key=Q3sdmUApwLSLHhNM3Mcd5A77yc3VcOAdfHWIxXRK')
+            // .then(response => {
+            //     console.log('===SUCCESS===')
+            //     console.log(response)
+            //     Object.entries(response.data).forEach(([key, value]) => {
+            //         console.log(value.Toping)
+            //         this.items.push(value.Toping)
+            //     });
+            // })
+            // .catch(error => console.log(error))
         },
 
         agregarCarrito() {
 
             if (this.counter > 0) {
                 alert('Se añadió al carrito')
-                const ALFAJOR = {
-                    cajas: this.counter,
-                    toppings: this.select
-                }
-                console.log(ALFAJOR)
 
                 //Establecer valores en 0
                 this.counter = 0
-                this.counterT = 0
-                this.counterA = 0
-                this.select = []
                 this.dialog = false
             }
             else {
@@ -135,7 +107,7 @@ export default {
     },
 
     created() {
-        this.getToppings()
+        // this.getToppings()
     },
 
     watch: {

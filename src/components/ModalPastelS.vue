@@ -47,29 +47,21 @@
                                     </v-row>
                                 </v-row>
 
+                                
                                 <v-row class="">
-                                    <v-row class="mt-4">
-                                        <h3 class="mr-3">Descripción</h3>
+                                    <v-row class="mt-3">
+                                        <h3 class="mr-3">Sabor</h3>
                                     </v-row>
-
-                                    <v-textarea class="mt-4" filled auto-grow label="Describe tu pastel" rows="4" row-height="30" shaped
-                                    v-model="name" :counter="100" required append-icon="mdi-comment">
-
-                                    </v-textarea>
                                 </v-row>
-
-                                <v-row class="">
-                                    <v-row class="mt-4">
-                                        <h3 class="mr-3">Adjuntar imagen</h3>
+                                
+                                <v-row>
+                                    <v-row class="mt-5">
+                                        <v-radio-group id="radio-group"  :rules="[v => !!v || 'Debes elegir un sabor']" required>
+                                            <v-radio label="Vainilla" value="radio-1">Vainilla</v-radio>
+                                            <v-radio label="Chocolate" value="radio-2">Chocolate</v-radio>
+                                            <v-radio label="Tres leches" value="radio-3">Tres leches</v-radio>
+                                        </v-radio-group>
                                     </v-row>
-                                    
-                                    <v-btn class="mx-2" fab dark color="#424242">
-                                        <v-icon dark>
-                                            mdi-image-plus
-                                        </v-icon>
-                                    </v-btn>
-
-
                                 </v-row>
 
                                 <v-row class="mt-3">
@@ -94,10 +86,6 @@
                         </v-btn>
                         <v-btn color="blue darken-1" text class="mr-4" @click="validate">
                             Agregar al carrito
-                        </v-btn>
-
-                        <v-btn color="error" class="mr-4" @click="reset">
-                            Limpiar
                         </v-btn>
                     </v-card-actions>
                 </v-card>
@@ -127,11 +115,7 @@ export default {
     methods: {
         validate () {
         this.$refs.form.validate()
-        },
-
-        reset () {
-            this.$refs.form.reset()
-        },
+        }
     },
     watch: {
 
