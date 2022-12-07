@@ -13,7 +13,7 @@
       <v-btn v-for="(item, index) in rutas" :key="index" text @click="insertarRuta(item.ruta)">
         <span class="mr-2">{{ item.nombre }}</span>
       </v-btn>
-
+      
           <ModalCarrito></ModalCarrito>
        
     </v-app-bar>
