@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="#fd79a8" dark>
+    <v-app-bar app color="#F48FB1" dark>
       <div class="d-flex align-center">
         <v-img alt="Vuetify Logo" class="shrink mr-2" contain src="../src/assets/RoyalCookieLogo2.png"
           transition="scale-transition" width="40" />

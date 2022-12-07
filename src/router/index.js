@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import About from '../views/AboutView.vue'
 import Pedidos from '../views/Pedidos.vue'
 import Catalogo from '../views/Catalogo.vue'
+import PedidosAdmin from '../views/PedidosAdmin.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,11 @@ const routes = [
     path: '/pedidos',
     name: 'pedidos',
     component: Pedidos
+  },
+  {
+    path: '/pedidosadmin',
+    name: 'pedidosadmin',
+    component: PedidosAdmin
   }
   
   

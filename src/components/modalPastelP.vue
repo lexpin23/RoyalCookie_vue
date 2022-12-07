@@ -162,6 +162,23 @@ export default {
             if(this.validate == true){
                 console.log('arreee')
             }
+
+            axios.post('http://localhost:8080/api/AgregarPasteles', {
+                    "idUser": 1,
+                    "Tama": 'Chico',
+                    "Estil": 'Esponjoso',
+                    "Fech": '2022-12-07',
+                    "Descripcion": 'Con chocolate Ferrero Rocher',
+                    "Imagen": '',
+                    "idProd": 2
+            }).then((res) => {
+                const { data } = res;
+                console.log(data)
+                alert('Se añadió al carrito')
+
+            }).catch((err) => {
+                console.log(err)
+            })
         },
 
         validate() {
