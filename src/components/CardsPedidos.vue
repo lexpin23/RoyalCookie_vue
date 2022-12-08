@@ -103,6 +103,8 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
     data: () => ({
         desserts: [
@@ -136,11 +138,24 @@ export default {
     }),
 
     created() {
-
+        this.getPedidos()
     },
 
     methods: {
+        getPedidos(){
+            console.log('Abrir carrito')
 
+            axios.get('http://localhost:8080/api/ObtenerPedido/1', {
+
+                }).then((res) => {
+                    const { data } = res;
+                    console.log(data)
+                    alert('Se obtuvo todos los pedidos')
+
+                }).catch((err) => {
+                    console.log(err)
+                })
+        },
 
     }
 }
