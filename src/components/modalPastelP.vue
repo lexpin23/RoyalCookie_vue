@@ -24,10 +24,9 @@
 
                                     <v-row>
                                         <v-row class="mt-5">
-                                            <v-radio-group id="radio-group"
+                                            <v-radio-group id="radio-group" v-model="selectedOptionIdTam"
                                                 :rules="[v => !!v || 'Debes elegir un tamaño']" required>
-                                                <v-radio label="Chico" value="radio-1">Chico</v-radio>
-                                                <v-radio label="Mediano" value="radio-2"></v-radio>
+                                                <v-radio v-for="optionTam in optionsTam" :key="optionTam.id" :label="optionTam.label" :value="optionTam.id"></v-radio>
                                             </v-radio-group>
                                         </v-row>
                                     </v-row>
@@ -41,10 +40,9 @@
 
                                     <v-row>
                                         <v-row class="mt-5">
-                                            <v-radio-group id="radio-group"
+                                            <v-radio-group id="radio-group" v-model="selectedOptionId"
                                                 :rules="[v => !!v || 'Debes elegir un estilo']" required>
-                                                <v-radio label="Esponjoso" value="radio-1">Esponjoso</v-radio>
-                                                <v-radio label="Mantequilla" value="radio-2">Mantequilla</v-radio>
+                                                <v-radio v-for="option in options" :key="option.id" :label="option.label" :value="option.id"></v-radio>
                                             </v-radio-group>
                                         </v-row>
                                     </v-row>
@@ -55,7 +53,7 @@
                                         </v-row>
 
                                         <v-textarea class="mt-4" filled auto-grow label="Describe tu pastel" rows="4"
-                                            row-height="30" shaped v-model="name" :counter="100" required
+                                            row-height="30" shaped v-model="name" :rules="nameRules" :counter="150" required
                                             append-icon="mdi-comment">
 
                                         </v-textarea>
@@ -71,8 +69,9 @@
                                                 <v-text-field v-model="trip.start" label="Elegir una fecha de entrega" prepend-icon="mdi-calendar" readonly v-bind="attrs" v-on="on" >
                                                 </v-text-field>
                                             </template>
-                                            <v-date-picker v-model="date" no-title scrollable required color="pink lighten-3">
+                                            <v-date-picker v-model="date" no-title scrollable required color="pink lighten-3" :picker-date.sync="pickerDate" :rules="dateRules">
                                                 <v-spacer></v-spacer>
+                                                
                                                 <v-btn text color="pink lighten-3" @click="$refs.startMenu.isActive = false">
                                                     Cancel
                                                 </v-btn>
@@ -81,6 +80,7 @@
                                                 </v-btn>
                                             </v-date-picker>
                                         </v-menu>
+                                        {{date}}
 
                                     </v-row>
 
@@ -120,7 +120,7 @@
                             <v-btn color="blue darken-1" text @click="dialog = false">
                                 Cerrar
                             </v-btn>
-                            <v-btn color="blue darken-1" text class="mr-4" @click="agregarCarrito()" >
+                            <v-btn color="blue darken-1" text class="mr-4" @click="validate()" >
                                 Agregar al carrito
                             </v-btn>
 
@@ -138,6 +138,7 @@
 
 <script>
 
+import axios from 'axios'
 
 export default {
     props: ['title'],
@@ -145,44 +146,66 @@ export default {
     data: () => ({
         dialog: false,
         checkbox: false,
+        pickerDate: null,
         name: '',
         nameRules: [
-            v => !!v || 'Name is required',
-            v => (v && v.length <= 100) || 'Name must be less than 100 characters',
+            v => !!v || 'Debes hacer una descripción',
+            v => (v && v.length <= 150) || 'No debe sobrepasar 150 letras',
         ],
         date: null,
+        dateRules: [
+            v => !!v || 'Debes hacer una descripción',
+            v => (v == null) || 'Debes elegir una fecha',
+            
+        ],
         trip: {
             location: null,
             start: null
-        }
+        },
+        selectedOptionIdTam: null,
+        optionsTam:[
+            { id: 1, label: 'Chico'},
+            { id: 2, label: 'Mediano'},
+        ],
+        selectedOptionId: null,
+        options: [
+            { id: 1, label: 'Esponjoso'},
+            { id: 2, label: 'Mantequilla'},
+        
+        ]
     }),
 
     methods: {
         agregarCarrito(){
-            if(this.validate == true){
-                console.log('arreee')
-            }
 
+            
+            
             axios.post('http://localhost:8080/api/AgregarPasteles', {
                     "idUser": 1,
-                    "Tama": 'Chico',
-                    "Estil": 'Esponjoso',
-                    "Fech": '2022-12-07',
-                    "Descripcion": 'Con chocolate Ferrero Rocher',
+                    "Tamaño": this.selectedOptionIdTam == 1 ? 'Chico' : 'Mediano',
+                    "Estilo": this.selectedOptionId == 1 ? 'Esponjoso' : 'Mantequilla',
+                    "Fecha": this.date,
+                    "Descripcion": `${this.name}`,
                     "Imagen": '',
                     "idProd": 2
             }).then((res) => {
                 const { data } = res;
                 console.log(data)
                 alert('Se añadió al carrito')
+                this.dialog = false
+                this.reset()
 
             }).catch((err) => {
                 console.log(err)
             })
+           
+           
+           
         },
 
         validate() {
-            this.$refs.form.validate()
+            
+            this.$refs.form.validate() ? this.agregarCarrito() : console.log('campos obligatorios')
         },
 
         reset() {
@@ -191,7 +214,20 @@ export default {
     },
 
     computed:{
-    
+        selectedOptionType() {
+        if (!this.selectedOptionId) {
+           return("") 
+        }
+           return this.options.find(o => o.id === this.selectedOptionId).type
+        },
+
+        selectedOptionTypeTam() {
+            if (!this.selectedOptionIdTam) {
+                return("") 
+            }
+            
+            return this.optionsTam.find(o => o.id === this.selectedOptionIdTam).type
+        }
     },
 
     watch: {
