@@ -38,8 +38,22 @@
 
             </v-data-table>
 
+            <v-spacer></v-spacer>
+
             <v-card-actions>
+
+                <v-radio-group id="radio-group" v-model="selectedOptionId"
+                                                :rules="[v => !!v || 'Debes elegir una forma de entrega']" required>
+                                                <v-radio v-for="option in options" :key="option.id" :label="option.label" :value="option.id"></v-radio>
+                                            </v-radio-group>
                 <v-spacer></v-spacer>
+
+                
+                                  
+                                        
+                                            
+                                      
+                                    
                 <v-btn color="blue darken-1" text @click="dialog = false">
                     Cerrar
                 </v-btn>
@@ -107,9 +121,22 @@ export default {
         snackbar: false,
         text: 'Pago exitoso',
         timeout: 2000,
+
+        selectedOptionId: null,
+        options: [
+            { id: 1, label: 'Recojer'},
+            { id: 2, label: 'A domicilio'},
+        
+        ]
     }),
 
     computed: {
+        selectedOptionType() {
+        if (!this.selectedOptionId) {
+           return("") 
+        }
+           return this.options.find(o => o.id === this.selectedOptionId).type
+        },
     },
 
     watch: {
