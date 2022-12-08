@@ -84,7 +84,7 @@
                         <v-btn color="blue darken-1" text @click="dialog = false">
                             Cerrar
                         </v-btn>
-                        <v-btn color="blue darken-1" text class="mr-4" @click="validate">
+                        <v-btn color="blue darken-1" text class="mr-4" @click="agregarCarrito()">
                             Agregar al carrito
                         </v-btn>
                     </v-card-actions>
@@ -98,6 +98,7 @@
 
 <script>
 
+import axios from 'axios'
 
 export default {
     props: ['title'],
@@ -111,6 +112,28 @@ export default {
     methods: {
         validate () {
         this.$refs.form.validate()
+        },
+        agregarCarrito(){
+            if(this.validate == true){
+                console.log('arreee')
+            }
+
+            axios.post('http://localhost:8080/api/AgregarPasteles', {
+                    "idUser": 1,
+                    "Tamaño": 'Mediano',
+                    "Estilo": 'Esponjoso',
+                    "Fecha": '',
+                    "Descripcion": '',
+                    "Imagen": '',
+                    "idProd": 1
+            }).then((res) => {
+                const { data } = res;
+                console.log(data)
+                alert('Se añadió al carrito')
+
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     },
     watch: {
