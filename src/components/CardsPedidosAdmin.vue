@@ -14,7 +14,7 @@
           filled
           label="Cambiar estado"
           dense
-          @change="(selection) => selectionChanged(selection)" 
+          @change="(selection) => selectionChanged(selection, item)" 
         ></v-select>
         
       </v-col>
@@ -117,11 +117,13 @@ export default {
                 })
         },
 
-        selectionChanged(selection) {
+        selectionChanged(selection, item) {
             console.log(selection)
-
+                   
+            this.editedItem = Object.assign({}, item)
+            
             axios.post('http://localhost:8080/api/ModEstatus', {
-                "idLinea": 274,
+                "idLinea": this.editedItem.IDLineaPedido,
                 "Estatus": selection
             }).then((res) => {
                 const { data } = res;
