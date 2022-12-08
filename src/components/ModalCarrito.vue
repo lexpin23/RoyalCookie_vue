@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" width="700">
         <template v-slot:activator="{ on, attrs }">
-            <v-btn dark v-bind="attrs" v-on="on">
+            <v-btn dark v-bind="attrs" v-on="on" @click="getCarrito()">
                 <v-icon>mdi-cart</v-icon>
             </v-btn>
         </template>
@@ -54,6 +54,9 @@
 </template>
 
 <script>
+
+import axios from 'axios'
+
 export default {
     data: () => ({
         dialog: false,
@@ -103,6 +106,8 @@ export default {
 
     created() {
         this.initialize()
+       
+        
     },
 
     methods: {
@@ -133,6 +138,21 @@ export default {
                     precio: 150
                 }
             ]
+        },
+
+        getCarrito(){
+            console.log('Abrir carrito')
+
+            axios.get('http://localhost:8080/api/ObtenerCarrito/1', {
+
+                }).then((res) => {
+                    const { data } = res;
+                    console.log(data)
+                    alert('Se obtuvo el carrito')
+
+                }).catch((err) => {
+                    console.log(err)
+                })
         },
 
         editItem(item) {
