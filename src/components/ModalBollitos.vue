@@ -54,6 +54,17 @@
                 </v-card>
             </v-dialog>
         </v-row>
+
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+            {{ text }}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+                    Cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
+
     </div>
 </template>
 
@@ -69,25 +80,13 @@ export default {
         counter: 1,
         
         cajaB: 40,
-        info: ''
+        info: '',
+        snackbar: false,
+        text: 'Agregado al carrito',
+        timeout: 2000,
     }),
 
     methods: {
-        getToppings(){
-            
-
-            // axios.get('https://api.nasa.gov/planetary/apod?api_key=Q3sdmUApwLSLHhNM3Mcd5A77yc3VcOAdfHWIxXRK')
-            // .then(response => {
-            //     console.log('===SUCCESS===')
-            //     console.log(response)
-            //     Object.entries(response.data).forEach(([key, value]) => {
-            //         console.log(value.Toping)
-            //         this.items.push(value.Toping)
-            //     });
-            // })
-            // .catch(error => console.log(error))
-        },
-
         agregarCarrito() {
 
             if (this.counter > 0) {
@@ -99,7 +98,7 @@ export default {
                 }).then((res) => {
                     const { data } = res;
                     console.log(data)
-                    alert('Se añadió al carrito')
+                    this.snackbar = true;
 
                 }).catch((err) => {
                     console.log(err)

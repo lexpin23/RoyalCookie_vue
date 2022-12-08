@@ -14,19 +14,20 @@
                     </v-card-title>
                     <v-card-text>
                         <v-container>
-                            
+
                             <v-col>
                                 <v-row>
                                     <v-row class="mt-5">
                                         <h2 class="mr-3">Cajas</h2>
                                     </v-row>
-                                   
+
                                     <v-row>
-                                        <v-btn type="button" v-if="counter < 0 ? counter = 0 : 'logrado'" v-on:click="counter -= 1">-</v-btn>
+                                        <v-btn type="button" v-if="counter < 0 ? counter = 0 : 'logrado'"
+                                            v-on:click="counter -= 1">-</v-btn>
                                         <p class="ml-2 mr-2 mt-2">{{ counter }}</p>
                                         <v-btn v-on:click="counter += 1" class="mr-auto">+</v-btn>
                                     </v-row>
-                                    
+
                                 </v-row>
 
                                 <v-row class="mt-5">
@@ -38,21 +39,23 @@
                                 <v-row>
                                     <v-row class="mt-5">
                                         <v-radio-group id="radio-group">
-                                            <v-radio label="Coco" value="Coco" ></v-radio>
-                                            <v-radio label="Azúcar glass" value="Azúcar glass" ></v-radio>
+                                            <v-radio label="Coco" value="Coco"></v-radio>
+                                            <v-radio label="Azúcar glass" value="Azúcar glass"></v-radio>
                                         </v-radio-group>
                                     </v-row>
                                 </v-row>
-                                
+
 
                                 <v-row class="mt-3">
                                     <v-row class="mt-5">
-                                        <h2>Total</h2>     
+                                        <h2>Total</h2>
                                     </v-row>
                                 </v-row>
 
                                 <v-row class="mt-3">
-                                    <v-row class="mt-5"><v-label>${{ (cajaA * counter) + (counterT * coco) + (counterA * azucarG) }}</v-label></v-row>
+                                    <v-row class="mt-5"><v-label>${{ (cajaA * counter) + (counterT * coco) + (counterA *
+                                            azucarG)
+                                    }}</v-label></v-row>
                                 </v-row>
                             </v-col>
 
@@ -70,6 +73,17 @@
                 </v-card>
             </v-dialog>
         </v-row>
+
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+            {{ text }}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+                    Cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
+
     </div>
 </template>
 
@@ -92,47 +106,43 @@ export default {
         desbtnT: false,
         select: [],
         items: [],
-        info: ''
+        info: '',
+        snackbar: false,
+        text: 'Agregado al carrito',
+        timeout: 2000,
     }),
 
     methods: {
-        getToppings(){
+        getToppings() {
             this.items = []
 
             axios.get('http://localhost:8080/api/obtenergalletas')
-            .then(response => {
-                console.log('===SUCCESS===')
-                console.log(response)
-                Object.entries(response.data).forEach(([key, value]) => {
-                    console.log(value.Toping)
-                    this.items.push(value.Toping)
-                });
-            })
-            .catch(error => console.log(error))
+                .then(response => {
+                    Object.entries(response.data).forEach(([key, value]) => {
+                        this.items.push(value.Toping)
+                    });
+                })
+                .catch(error => console.log(error))
         },
 
         agregarCarrito() {
 
             if (this.counter > 0) {
 
-                let radioGroup = document.getElementById('radio-group')
-                console.log(radioGroup)
-                console.log(`${this.counter}`)
-
                 axios.post('http://localhost:8080/api/AgregarCarrito', {
                     "idUser": 1,
                     "Cantidad": this.counter,
-                    "idCatalogo": 1
+                    "idCatalogo": 6
 
                 }).then((res) => {
                     const { data } = res;
-                    console.log(data)
-                    alert('Se añadió al carrito')
+                    this.snackbar = true;
+
 
                 }).catch((err) => {
                     console.log(err)
                 })
-                
+
                 //Establecer valores en 0
                 this.counter = 0
                 this.counterT = 0

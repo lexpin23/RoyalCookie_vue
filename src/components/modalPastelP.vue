@@ -177,9 +177,7 @@ export default {
 
     methods: {
         agregarCarrito(){
-
-            
-            
+  
             axios.post('http://localhost:8080/api/AgregarPasteles', {
                     "idUser": 1,
                     "Tamaño": this.selectedOptionIdTam == 1 ? 'Chico' : 'Mediano',

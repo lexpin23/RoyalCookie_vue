@@ -43,13 +43,25 @@
                 <v-btn color="blue darken-1" text @click="dialog = false">
                     Cerrar
                 </v-btn>
-                <v-btn color="blue darken-1" text class="mr-4" >
+                <v-btn color="blue darken-1" text class="mr-4" @click="pagarCarrito()">
                     Pagar
                 </v-btn>
             </v-card-actions>
 
-        </v-card>        
+        </v-card>   
+        
+        <v-snackbar v-model="snackbar" :timeout="timeout">
+            {{ text }}
+
+            <template v-slot:action="{ attrs }">
+                <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+                    Cerrar
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-dialog>
+
+    
 
 </template>
 
@@ -68,12 +80,11 @@ export default {
                 sortable: false,
                 value: 'name',
             },
-            { text: 'Producto', value: 'producto', sortable: false },
-                { text: 'Descripcion', value: 'descripcion', sortable: false },
-                { text: 'Toppings', value: 'toppings', sortable: false },
-                { text: 'Cantidad', value: 'cantidad', sortable: false },
-                { text: 'Precio', value: 'precio', sortable: false },
-                { text: 'Actions', value: 'actions', sortable: false },
+            { text: 'Producto', value: 'Nombre', sortable: false },
+            { text: 'Toppings', value: 'Toping', sortable: false },
+            { text: 'Cantidad', value: 'Cantidad', sortable: false },
+            { text: 'Precio', value: 'Precio', sortable: false },
+            { text: 'Actions', value: 'actions', sortable: false },
         ],
         desserts: [],
         editedIndex: -1,
@@ -93,6 +104,9 @@ export default {
             cantidad: 0,
             precio: 0,
         },
+        snackbar: false,
+        text: 'Pago exitoso',
+        timeout: 2000,
     }),
 
     computed: {
@@ -105,54 +119,38 @@ export default {
     },
 
     created() {
-        this.initialize()
-       
-        
+
     },
 
     methods: {
-        initialize() {
-            this.desserts = [
-                {
-                    id: 1,
-                    producto: 'Alfajores',
-                    descripcion: '',
-                    toppings: 'Coco, Azúcar glass',
-                    cantidad: 1,
-                    precio: 80
-                },
-                {
-                    id: 2,
-                    producto: 'Bollitos',
-                    descripcion: '',
-                    toppings: '',
-                    cantidad: 2,
-                    precio: 100
-                },
-                {
-                    id: 3,
-                    producto: 'Pastel Chocolate',
-                    descripcion: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt, voluptatum neque possimus quia quae et dicta delectus fugit nulla rerum? Odio earum sit esse incidunt magni a iste. Quae, incidunt.',
-                    toppings: '',
-                    cantidad: 1,
-                    precio: 150
-                }
-            ]
-        },
-
         getCarrito(){
             console.log('Abrir carrito')
+            this.desserts = []
 
             axios.get('http://localhost:8080/api/ObtenerCarrito/1', {
 
                 }).then((res) => {
                     const { data } = res;
-                    console.log(data)
-                    alert('Se obtuvo el carrito')
+                    this.desserts = data;
+                    console.log(this.desserts)
 
                 }).catch((err) => {
                     console.log(err)
                 })
+        },
+
+        pagarCarrito(){
+            axios.post('http://localhost:8080/api/pagarCarrito', {
+                "idUser": 1
+
+            }).then((res) => {
+                const { data } = res;
+                console.log(data)
+                this.snackbar = true;
+
+            }).catch((err) => {
+                console.log(err)
+            })
         },
 
         editItem(item) {
