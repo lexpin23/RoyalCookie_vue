@@ -143,7 +143,7 @@ export default {
             this.$refs.form.reset()
         },
         agregarCarrito(){
-            axios.post('http://localhost:8080/api/AgregarPasteles', {
+            axios.post('https://royalback.herokuapp.com/api/AgregarPasteles', {
                     "idUser": 1,
                     "Tamaño": this.selectedOptionIdTam == 1 ? 'Chico' : 'Mediano',
                     "Estilo": this.selectedOptionId == 1 ? 'Esponjoso' : 'Mantequilla',

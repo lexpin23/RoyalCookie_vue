@@ -116,7 +116,7 @@ export default {
         getToppings() {
             this.items = []
 
-            axios.get('http://localhost:8080/api/obtenergalletas')
+            axios.get('https://royalback.herokuapp.com/api/obtenergalletas')
                 .then(response => {
                     Object.entries(response.data).forEach(([key, value]) => {
                         this.items.push(value.Toping)
@@ -129,7 +129,7 @@ export default {
 
             if (this.counter > 0) {
 
-                axios.post('http://localhost:8080/api/AgregarCarrito', {
+                axios.post('https://royalback.herokuapp.com/api/AgregarCarrito', {
                     "idUser": 1,
                     "Cantidad": this.counter,
                     "idCatalogo": 6

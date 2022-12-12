@@ -1,30 +1,40 @@
 <template>
-    <div class="pedidos">
+  <div class="pedidos">
+    <v-app>
+      <BarraNavegacionVue></BarraNavegacionVue>
       <h1 class="text-center mt-5">Tus pedidos</h1>
 
       <CardsPedidos></CardsPedidos>
+      <v-main>
+        <router-view />
+      </v-main>
+    </v-app>
 
-    </div>
-  </template>
+
+  </div>
+</template>
   
-  <script>
+<script>
 
-  import CardsPedidos from '../components/CardsPedidos.vue'
-  export default {
-    name: 'pedidos',
+import CardsPedidos from '../components/CardsPedidos.vue'
+import BarraNavegacionVue from '@/components/BarraNavegacion.vue';
 
-    components: {
-      CardsPedidos
-    },
+export default {
+  name: 'pedidos',
 
-    data () {
-      return {
-        
-      }
-    },
+  components: {
+    CardsPedidos,
+    BarraNavegacionVue
+  },
 
-    methods:{
-      
+  data() {
+    return {
+
     }
+  },
+
+  methods: {
+
   }
+}
 </script>

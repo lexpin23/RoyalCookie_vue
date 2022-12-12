@@ -104,7 +104,7 @@ export default {
         getPedidos(){
             console.log('Abrir carrito')
 
-            axios.get('http://localhost:8080/api/ObtenerPedido/1', {
+            axios.get('https://royalback.herokuapp.com/api/ObtenerPedido/1', {
 
                 }).then((res) => {
                     const { data } = res;
@@ -122,7 +122,7 @@ export default {
                    
             this.editedItem = Object.assign({}, item)
             
-            axios.post('http://localhost:8080/api/ModEstatus', {
+            axios.post('https://royalback.herokuapp.com/api/ModEstatus', {
                 "idLinea": this.editedItem.IDLineaPedido,
                 "Estatus": selection
             }).then((res) => {

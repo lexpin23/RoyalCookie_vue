@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h1>Bienvenido al catálogo de Royal Cookie</h1>
+        <v-app>
+            <BarraNavegacionVue></BarraNavegacionVue>
+           
+            <h1>Bienvenido al catálogo de Royal Cookie</h1>
         <v-row>
             <v-col>
                     <v-card class="mx-auto" max-width="344">
@@ -124,39 +127,47 @@
             </v-col>
         </v-row>
 
+        <v-main>
+                <router-view />
+            </v-main>
+        </v-app>
+
+
     </div>
 </template>
 
 <script>
 
-    import ModalAlfajores from '../components/ModalAlfajores.vue'
-    import ModalPastelP from '../components/modalPastelP.vue'
-    import ModalBollitos from '../components/ModalBollitos.vue'
-    import ModalRoles from '../components/ModalRoles.vue'
-    import ModalPastelS from '../components/ModalPastelS.vue'
+import ModalAlfajores from '../components/ModalAlfajores.vue'
+import ModalPastelP from '../components/modalPastelP.vue'
+import ModalBollitos from '../components/ModalBollitos.vue'
+import ModalRoles from '../components/ModalRoles.vue'
+import ModalPastelS from '../components/ModalPastelS.vue'
+import BarraNavegacionVue from '@/components/BarraNavegacion.vue';
 
-    export default {
-        name : 'catalogo',
+export default {
+    name: 'catalogo',
 
-        components: {
-            ModalAlfajores,
-            ModalPastelP,
-            ModalBollitos,
-            ModalRoles,
-            ModalPastelS
-        },
-        data() {
-            return{
-                ModalAlfajores: false
-            }
-            
-        },
+    components: {
+        ModalAlfajores,
+        ModalPastelP,
+        ModalBollitos,
+        ModalRoles,
+        ModalPastelS,
+        BarraNavegacionVue
+    },
+    data() {
+        return {
+            ModalAlfajores: false
+        }
 
-        methods: {
-            print(){
-                console.log(this.getToppings)
-            }
+    },
+
+    methods: {
+        print() {
+            console.log(this.getToppings)
         }
     }
+}
 
 </script>

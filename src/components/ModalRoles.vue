@@ -90,7 +90,7 @@ export default {
         agregarCarrito() {
 
             if (this.counter > 0) {
-                axios.post('http://localhost:8080/api/AgregarCarrito', {
+                axios.post('https://royalback.herokuapp.com/api/AgregarCarrito', {
                     "idUser": 1,
                     "Cantidad": this.counter,
                     "idCatalogo": 2

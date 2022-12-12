@@ -154,7 +154,7 @@ export default {
             console.log('Abrir carrito')
             this.desserts = []
 
-            axios.get('http://localhost:8080/api/ObtenerCarrito/1', {
+            axios.get('https://royalback.herokuapp.com/api/ObtenerCarrito/1', {
 
                 }).then((res) => {
                     const { data } = res;
@@ -167,7 +167,7 @@ export default {
         },
 
         pagarCarrito(){
-            axios.post('http://localhost:8080/api/pagarCarrito', {
+            axios.post('https://royalback.herokuapp.com/api/pagarCarrito', {
                 "idUser": 1
 
             }).then((res) => {
