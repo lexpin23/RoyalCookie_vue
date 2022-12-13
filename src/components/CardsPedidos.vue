@@ -69,9 +69,9 @@ export default {
 
     methods: {
         getPedidos(){
-            console.log('Abrir carrito')
+           
 
-            axios.get('https://royalback.herokuapp.com/api/ObtenerPedido/1', {
+            axios.get('https://royalback.herokuapp.com/api/ObtenerPedido/4', {
 
                 }).then((res) => {
                     const { data } = res;

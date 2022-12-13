@@ -2,10 +2,9 @@
 
 /**
  * @type {import('@vue/cli-service').ProjectOptions}
-
-module.exports = {
+ */
+ module.exports = {
   devServer: {
     proxy: 'https://royalback.herokuapp.com/'
   }
 }
- */
